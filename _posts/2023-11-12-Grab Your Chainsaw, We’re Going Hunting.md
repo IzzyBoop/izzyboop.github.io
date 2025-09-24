@@ -13,7 +13,7 @@ date: 2023-11-12
 description: Using Chainsaw for Effective Threat Analysis
 author: izzyboop
 image:
-    path: /assets/img/Chainsaw/chainsaw.png
+    path: /assets/img/Chainsaw/chainsaw.jpg
 ---
 >Currently building page...
 {: .prompt-info }
