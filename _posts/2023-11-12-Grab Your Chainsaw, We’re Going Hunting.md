@@ -15,5 +15,5 @@ author: izzyboop
 image:
     path: /assets/img/Chainsaw/chainsaw.jpg
 ---
->This page was initially posted on [Medium](https://medium.com/@izzyboop/grab-your-chainsaw-were-going-hunting-50a5c82cef5d) and it currently being rebuilt here...
+>This page was initially posted on [Medium](https://medium.com/@izzyboop/grab-your-chainsaw-were-going-hunting-50a5c82cef5d) and is currently being rebuilt here...
 {: .prompt-info }
