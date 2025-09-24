@@ -37,7 +37,7 @@ social:
   name: IzzyBoop
   email: izzyboop@protonmail.com # change to your email address
   links:
-    # The first element serves as the copyright owner's link
+    # The first element serves as the copyright owner's link.
     - https://github.com/IzzyBoop # change to your GitHub homepage
     - https://x.com/IzzyBoopFPV # change to your Twitter homepage
     # Uncomment below to add more social links
