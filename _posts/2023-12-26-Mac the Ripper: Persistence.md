@@ -187,16 +187,16 @@ Overrides are exactly what they sound like. They are designed to override values
 
 ---
 
-### Conclusion
+## Conclusion
 
 As we can see above, there are many many way to persist in a MacOS environment. There are several that are currently used and many that are more obsolete. The point of this document is to stress that persistence mechanisms are and always will be evolving. Analysts and researchers need to ensure they are keeping up on current trends to stay steps ahead of Threat Actors.
 
-### Some Further Reading
+## Some Further Reading
 
 1. [Insistence on Persistence Huntress Blog](https://www.huntress.com/blog/insistence-on-persistence?source=post_page-----01b2bb1dbc08---------------------------------------)
 
 --- 
 
-### Footnotes
+## Footnotes
 
 [^1]: read as: a bunch.
