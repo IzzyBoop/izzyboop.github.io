@@ -9,7 +9,7 @@ tags:
   - persistence
   - analysis
 date: 2023-12-26
-description: Exploring Common Mac Persistence Mechanisms
+description: Exploring Common MacOS Persistence Mechanisms
 author: izzyboop
 image:
     path: /assets/img/Mac the Ripper/cover.webp
