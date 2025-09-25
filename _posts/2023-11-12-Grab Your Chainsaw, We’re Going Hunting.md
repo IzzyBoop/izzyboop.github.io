@@ -17,7 +17,7 @@ author: izzyboop
 image:
     path: /assets/img/Chainsaw/chainsaw.jpg
 ---
->This page was initially posted on [Medium](https://medium.com/@izzyboop/grab-your-chainsaw-were-going-hunting-50a5c82cef5d) and is currently being rebuilt here...
+>This page was initially posted on [Medium](https://medium.com/@izzyboop/grab-your-chainsaw-were-going-hunting-50a5c82cef5d)
 {: .prompt-info }
 
 ## Introduction
@@ -155,3 +155,76 @@ This query searches `log.evtx` for any login events `4624` from a specific user 
 
 The numbers in the left column show how often the specific entry to the right was seen within the logs. For example this shows that `49` events had an `IpAddress` of `192.168.0.188`. Depending on the investigation, this could give us a hint about where a threat actor was moving laterally from. This screenshot could also help to show us that our search was still far too wide and that we should narrow our search down a bit but this isn’t an investigation theory doc. Moving on.
 
+**Let’s do one more. An easy one.**
+
+```bash
+./chainsaw search -e "mimikatz" -i log.evtx --json -o export.json
+```
+
+This one added one option to the end. `-o` is our output flag. If you want to output the results to a file to process with other tools or outside the command line we can use `-o` then the name of the output file to achieve this.
+
+One more small concept I would like to make clear about Chainsaw is that it can search through multiple log files at once. You would do this by simply targeting the current working directory `./` on mac/linux and `.\` on windows. You can then search ALL logs for an instance of a username or IP address, or you can start to target the logs by filtering down to EventID’s instead of having to change your search path. Here’s an example:
+
+```bash
+./chainsaw search -t 'Event.System.EventID: =1149' ./
+```
+
+The above example is searching the entire directory `./` which could contain 1 log or even 17 log files. The way we differentiate which log we are looking in is by the EventID. In this case we are looking for `1149` so we can imply that somewhere in our folder we have the `RemoteConnectionManager` EVTX log and are looking for successful RDP sign ins.
+
+```bash
+./chainsaw search -t 'Event.System.EventID: =21' ./
+```
+
+The next example above is targeting EventID `21`. Now we could assume a few things from this one. We are looking for successful logins within the `LocalSessionManager` log or we could even be looking within the sysmon `operational` log. If we have both of these logs present you will likely want more filtering, or to remove a log from the directory temporarily otherwise you’ll get two different sources of information in your results.
+
+From here we can combine several concepts we’ve seen above to make our results better like filtering down to a specific time range, adding a string or regex search, and piping the results into `grep`, `sort`, and/or `uniq` to format the results in a way that works better for us.
+
+Let’s move on to `hunt`.
+
+---
+
+### Using Chainsaw’s Hunt Function
+
+Chainsaw’s `hunt` function is very useful in applying `sigma` rules to hunt through logs to find sus activity without you having to manually dig through the logs yourself.
+
+Let’s start off with Chainsaw’s man page. `./chainsaw hunt -h`
+
+![image](/assets/img/Chainsaw/image7.webp)
+
+There are a lot of options here and a fair deal of them are pretty self explanatory so we will just jump to what I normally use for hunting.
+
+```bash
+./chainsaw hunt logs.evtx/ -s sigma/ --mapping mappings/sigma-event-logs-all.yml
+```
+
+![image](/assets/img/Chainsaw/image8.webp)
+
+As we can see in this example, Chainsaw found some user logoff events with eventID’s and the target machine but no real context. Chainsaw’s `hunt` feature will not fill in context for you. It is important to consider how you can use `hunt` in conjunction with other tools and techniques to fill in the context.
+
+Let’s try this again but this time ill target the `EVTX-ATTACK-SAMPLES` provided by chainsaw and output the results to a CSV.
+
+```bash
+./chainsaw hunt EVTX-ATTACK-SAMPLES/ -s sigma/ --mapping mappings/sigma-event-logs-all.yml --csv --output results
+```
+
+![image](/assets/img/Chainsaw/image9.webp)
+
+![image](/assets/img/Chainsaw/image10.webp)
+
+This time we got results from `278` different artifact files exported out to a CSV for easier viewing and processing. The results from this hunt include, according to the sigma rules, `password policy enumeration`, `brute force attempts`, and several other possibly-malicious events.
+
+Just like in the `search` function, you can search by timestamp as well to make your hunting easier while giving you only what you need.
+
+```bash
+/chainsaw hunt evtx_attack_samples/ -s sigma/ --mapping mappings/sigma-event-logs-all.yml --from "2019-03-17T19:09:39" --to "2019-03-17T19:09:50"
+```
+
+You can also filter down to only a specific severity level.
+
+```bash
+./chainsaw hunt -r rules/ evtx_attack_samples -s sigma/rules --mapping mappings/sigma-event-logs-all.yml --level critical
+```
+
+Keep in mind, these severities are based on the sigma rules being applied and can cause some events to go undetected if you are not mindful in your hunt.
+
+If I can leave you with one thing about Chainsaw’s `hunt` feature, don’t let it be your only source of truth in an investigation. If you run a hunt and find nothing, that does not mean nothing happened, it simply means the sigma rules didn’t find it. Always use a mixture of `search`, `hunt`, other tooling, and a curious mind to power your investigations.
