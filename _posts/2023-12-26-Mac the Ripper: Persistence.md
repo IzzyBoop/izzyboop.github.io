@@ -42,6 +42,7 @@ LaunchAgents require no permissions to install, making them the easiest form of 
 Ever since macOS 10.11, malware is allegedly locked out of the `/system/`{: .filepath} location if `System Integrity Protection` remains on and has not been bypassed.
 
 ![image](/assets/img/Mac the Ripper/image1.gif){: .shadow .rounded-10 }
+_I don't trust like that_
 
 Anything inside the `/system/`{: .filepath} location should be signed by Apple. The other two locations below will have `LaunchAgents` from other developers.
 
