@@ -39,14 +39,14 @@ The first thing I would like to specify is that the chainsaw version I will be u
 
 You can follow [this link](https://github.com/WithSecureLabs/chainsaw/releases/tag/v2.8.0) to grab version `v2.8.0`.
 
-![image](/assets/img/Chainsaw/github-page.webp)
+![image](/assets/img/Chainsaw/github-page.webp){: .shadow .rounded-10 }
 
 Grab the version that coincides with the system you are using, in my case I will grab `chainsaw_x86_64-apple-darwin.zip` as I am on a Mac but no worries, if you are on a windows or linux system, the general process is incredibly similar. `apple-darwin` for mac, `pc-windows-msvc` for windows, and `unknown-linux-gnu` or `unknown-linux-musl` for linux systems.
 
 - So to start off, download the version from above that coincides with your system.
-- Unzip the `.zip` and place the directory in a place you will remember as it does not get installed, it is simply a `.exe` we call on from the terminal. This rings true for all systems. I’ve placed mine on my desktop in `~/Desktop/Tools/chainsaw` but you can put this anywhere you like. You can even add the `chainsaw.exe` to `PATH` but as that’s different on every system and isn’t the point of this doc, I’ll let you figure that one out with your `google-fu`.
+- Unzip the `.zip` and place the directory in a place you will remember as it does not get installed, it is simply a `.exe` we call on from the terminal. This rings true for all systems. I’ve placed mine on my desktop in `~/Desktop/Tools/chainsaw`{: .filepath} but you can put this anywhere you like. You can even add the `chainsaw.exe` to `PATH` but as that’s different on every system and isn’t the point of this doc, I’ll let you figure that one out with your `google-fu`.
 
-![image](/assets/img/Chainsaw/image2.webp)
+![image](/assets/img/Chainsaw/image2.webp){: .shadow .rounded-10 }
 
 - Boom, you’re done. That’s the “installation.”
 
@@ -54,7 +54,7 @@ Grab the version that coincides with the system you are using, in my case I will
 
 Let’s start off with looking at the chainsaw help documents. In terminal (or powershell), navigate to the same directory that the chainsaw executable is in. (If you don’t know how, look up the `cd` command). Let’s start with looking at a raw `./chainsaw -h` (note on windows systems the _slashy-bois_ go the other way and you may or may not have to specify `.exe` in your command. For example: `.\chainsaw.exe -h`)
 
-![image](/assets/img/Chainsaw/image3.webp)
+![image](/assets/img/Chainsaw/image3.webp){: .shadow .rounded-10 }
 _and I oop!_
 
 Wait a minute! Did you get the above message because you’re on a mac? Let’s Fix that the easy way. From the directory that the chainsaw executable is in run this command:
@@ -81,7 +81,7 @@ sudo spctl - master-enable
 
 Now let’s try that again. `./chainsaw -h`
 
-![image](/assets/img/Chainsaw/manpage.webp)
+![image](/assets/img/Chainsaw/manpage.webp){: .shadow .rounded-10 }
 
 This help page shows us that we have four “flags” (options). `-h` for help and `-V` for versioning information, `--num-threads` to limit the number of cpu threads used, and `--no-banner` to hide the Chainsaw banner. (You can use `-q` for that as well).
 
@@ -89,7 +89,7 @@ We also see that we have six `Commands` that we can use. We will be primarily fo
 
 `hunt` : hunt through ‘artefacts’ (I am 100% convinced that’s not how you spell that) using detection rules for threat detection.
 
-![image](/assets/img/Chainsaw/image4.webp)
+![image](/assets/img/Chainsaw/image4.webp){: .shadow .rounded-10 }
 _I can hear my UK colleagues screeching now_
 
 `search` : to search through forensic artifacts for keywords.
@@ -102,7 +102,7 @@ Chainsaw’s `search` function, as stated above, allows us to intelligently sift
 
 Let’s start off by grabbing the man page for chainsaw search with `./chainsaw search --help` or `./chainsaw search -h`.
 
-![image](/assets/img/Chainsaw/image5.webp)
+![image](/assets/img/Chainsaw/image5.webp){: .shadow .rounded-10 }
 
 We can see several options at our disposal but there are a few I want to focus on below.
 
@@ -151,7 +151,7 @@ _insert Jeopardy music track here_
 
 This query searches `log.evtx` for any login events `4624` from a specific user `SID` between two timestamps then pipes it to `grep`, `sort`, and `uniq`, to format the data to be short and concise. It also utilizes `-q` which is for quiet. This removes the Chainsaw ASCII art banner. Some example output of the above command:
 
-![image](/assets/img/Chainsaw/image6.webp)
+![image](/assets/img/Chainsaw/image6.webp){: .shadow .rounded-10 }
 
 The numbers in the left column show how often the specific entry to the right was seen within the logs. For example this shows that `49` events had an `IpAddress` of `192.168.0.188`. Depending on the investigation, this could give us a hint about where a threat actor was moving laterally from. This screenshot could also help to show us that our search was still far too wide and that we should narrow our search down a bit but this isn’t an investigation theory doc. Moving on.
 
@@ -189,7 +189,7 @@ Chainsaw’s `hunt` function is very useful in applying `sigma` rules to hunt th
 
 Let’s start off with Chainsaw’s man page. `./chainsaw hunt -h`
 
-![image](/assets/img/Chainsaw/image7.webp)
+![image](/assets/img/Chainsaw/image7.webp){: .shadow .rounded-10 }
 
 There are a lot of options here and a fair deal of them are pretty self explanatory so we will just jump to what I normally use for hunting.
 
@@ -197,7 +197,7 @@ There are a lot of options here and a fair deal of them are pretty self explanat
 ./chainsaw hunt logs.evtx/ -s sigma/ --mapping mappings/sigma-event-logs-all.yml
 ```
 
-![image](/assets/img/Chainsaw/image8.webp)
+![image](/assets/img/Chainsaw/image8.webp){: .shadow .rounded-10 }
 
 As we can see in this example, Chainsaw found some user logoff events with eventID’s and the target machine but no real context. Chainsaw’s `hunt` feature will not fill in context for you. It is important to consider how you can use `hunt` in conjunction with other tools and techniques to fill in the context.
 
@@ -207,9 +207,9 @@ Let’s try this again but this time ill target the `EVTX-ATTACK-SAMPLES` provid
 ./chainsaw hunt EVTX-ATTACK-SAMPLES/ -s sigma/ --mapping mappings/sigma-event-logs-all.yml --csv --output results
 ```
 
-![image](/assets/img/Chainsaw/image9.webp)
+![image](/assets/img/Chainsaw/image9.webp){: .shadow .rounded-10 }
 
-![image](/assets/img/Chainsaw/image10.webp)
+![image](/assets/img/Chainsaw/image10.webp){: .shadow .rounded-10 }
 
 This time we got results from `278` different artifact files exported out to a CSV for easier viewing and processing. The results from this hunt include, according to the sigma rules, `password policy enumeration`, `brute force attempts`, and several other possibly-malicious events.
 

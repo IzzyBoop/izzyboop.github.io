@@ -39,15 +39,15 @@ This one here is probably the most common method of persistence on macOS. Launch
 
 LaunchAgents require no permissions to install, making them the easiest form of persistence to install on a mac system. They are by far the most common type of persistence used by developers, both benign and malicious.
 
-Ever since macOS 10.11, malware is allegedly locked out of the `/system/` location if `System Integrity Protection` remains on and has not been bypassed.
+Ever since macOS 10.11, malware is allegedly locked out of the `/system/`{: .filepath} location if `System Integrity Protection` remains on and has not been bypassed.
 
-![image](/assets/img/Mac the Ripper/image1.gif)
+![image](/assets/img/Mac the Ripper/image1.gif){: .shadow .rounded-10 }
 
-Anything inside the `/system/` location should be signed by Apple. The other two locations below will have `LaunchAgents` from other developers.
+Anything inside the `/system/`{: .filepath} location should be signed by Apple. The other two locations below will have `LaunchAgents` from other developers.
 
 `LaunchAgents` exist as `.plist` files. They can either specify a file to execute or can contain their own commands to execute. An example of a `.plist` file:
 
-![image](/assets/img/Mac the Ripper/image2.webp)
+![image](/assets/img/Mac the Ripper/image2.webp){: .shadow .rounded-10 }
 
 **Where to look:**
 
@@ -159,7 +159,7 @@ A note from crontab’s main page (Thanks [Stuart](https://www.huntress.com/auth
 
 Periodic scripts are similar to Cron jobs and are generally written on a daily, weekly, or monthly schedule. These scripts are to be dropped into one of the below locations and will execute on the schedule indicated by its parent folder.
 
-![image](/assets/img/Mac the Ripper/image3.webp)
+![image](/assets/img/Mac the Ripper/image3.webp){: .shadow .rounded-10 }
 
 **Where to look:**
 
@@ -171,7 +171,7 @@ Periodic scripts are similar to Cron jobs and are generally written on a daily, 
 /etc/periodic/monthly
 ```
 
-Also, be sure to check both `/etc/defaults/periodic.conf` and `/etc/periodic.conf` for system and local overrides to the default `periodic` configuration.
+Also, be sure to check both `/etc/defaults/periodic.conf`{: .filepath} and `/etc/periodic.conf`{: .filepath} for system and local overrides to the default `periodic` configuration.
 
 ---
 
