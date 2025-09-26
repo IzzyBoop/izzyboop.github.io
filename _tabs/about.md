@@ -4,5 +4,5 @@ icon: fas fa-info-circle
 order: 4
 ---
 
-> Izzy out of containment
+> DANGER: Izzy out of containment
 {: .prompt-danger }
