@@ -6,3 +6,17 @@ order: 4
 
 > DANGER: Izzy out of containment
 {: .prompt-danger }
+
+Hiya! I'm Izzy! ^_^ but listen, I have no idea how to talk about myself. Should I just be objective? Sure.
+
+I currently work for an MDR as a Threat Hunter and fill my spare time researching the MacOS security landscape. Prior to my current employment I was SOC, IR, worked at an MSP, had a few years working with CADD software, was a welder (TIG), a bartender, and worked in food service. 
+
+My formal education is meaningless. I initially went to college for Film VFX but that school was so incredibly abysmal I transferred to DeVry just to finish my Bachelors then convinced myself I should just go work in tech. Now, several years later, I'm on the fence about whether or not to pursue my masters in Cybersecurity. (Something something success through persistence something?)
+
+I am also apparently now a member of the [DeTraced](https://detraced.org) cybersecurity research team. They're very neato and fun to work with. ^_^
+
+In my free time outside of tech I can often be found playing guitar, playing some sort of video game (`silksong`{: .filepath } at the time of writing), reading cute webcomics and nosleeps / creepypastas, chasing drift cars with FPV drones ([@izzyboop_fpv on IG](https://www.instagram.com/izzyboop_fpv/)), or elbow deep in the engine bay of any random subaru while listening to Creed and cursing at whatever malevolent god allowed the subaru boxer engine to exist. 
+
+My dream is to one day quit cybersecurity forever and open up a queer friendly coffee shop. 
+
+Uh, I think that's it? Sure, whatever, I'm sleepy anyway, k bai~
