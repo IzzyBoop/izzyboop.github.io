@@ -9,13 +9,13 @@ order: 4
 
 Hiya! I'm Izzy! ^_^ but listen, I have no idea how to talk about myself. Should I just be objective? Sure.
 
-I currently work for an MDR as a Threat Hunter and fill my spare time researching the MacOS security landscape. Prior to my current employment I was SOC, IR, worked at an MSP, had a few years working with CADD software, was a welder (TIG), a bartender, and worked in food service. 
+I currently work for an MDR as a Threat Hunter and fill my spare time researching the MacOS security landscape and slamming my face against ARM assembly. I have a non-zero amount of experience in malware analysis, threat intelligence, threat research, and various other parts of the same job we decided to section off and give their own name. (I'm a generalist and prefer to keep it that way.) Prior to my current employment I was SOC (dreadful experience), IR (this was fun), worked at an MSP, had a few years working with CADD software, was a welder (anodized aluminum TIG), a bartender (gay bar because duh), and worked in food service. (All this to say I have experience handling walls of bullshit being flung at my face.)(Should I parenthasize more things? Is Parenthasize a word?)
 
 My formal education is meaningless. I initially went to college for Film VFX but that school was so incredibly abysmal I transferred to DeVry just to finish my Bachelors then convinced myself I should just go work in tech. Now, several years later, I'm on the fence about whether or not to pursue my masters in Cybersecurity. (Something something success through persistence something?)
 
 I am also apparently now a member of the [DeTraced](https://detraced.org) cybersecurity research team. They're very neato and fun to work with. ^_^
 
-In my free time outside of tech I can often be found playing guitar, playing some sort of video game (`silksong`{: .filepath } at the time of writing), reading cute webcomics and nosleeps / creepypastas, chasing drift cars with FPV drones ([@izzyboop_fpv on IG](https://www.instagram.com/izzyboop_fpv/)), or elbow deep in the engine bay of any random subaru while listening to Creed and cursing at whatever malevolent god allowed the subaru boxer engine to exist. 
+In my free time outside of tech I can often be found playing guitar (primarily 7 and 8 string usually), playing some sort of video game (`silksong`{: .filepath } at the time of writing), reading cute webcomics and nosleeps / creepypastas (`I am the Grim Reaper`{: .filepath } and `Stolen Tongues`{: .filepath } are two faves), chasing drift cars with custom built FPV drones ([@izzyboop_fpv on IG](https://www.instagram.com/izzyboop_fpv/)), or elbow deep in the engine bay of any random subaru while listening to Creed and cursing at whatever malevolent god allowed the subaru boxer engine to exist. 
 
 My dream is to one day quit cybersecurity forever and open up a queer friendly coffee shop. 
 
