@@ -106,7 +106,7 @@ certutil -decode .\raw.txt decode.exe
 
 ![image](/assets/img/AdvIpScan/12.webp){: .shadow .rounded-10 }
 
-> In the above screenshot, I’m simply running certutil against the `raw.txt` which contains the original Base64 and outputting it as `decoded.exe`. Certutil is often used exactly like this by threat actors to create an .exe from encoded data on a target system, so this will generally trigger most EDR products to create an alert. 
+> In the above screenshot, I’m simply running certutil against the `raw.txt` which contains the original Base64 and outputting it as `decoded.exe`. Certutil is often used exactly like this by threat actors to create an .exe from encoded data on a target system, so this will generally trigger most EDR products to create an alert so don't get all pissy with me if you're putzing around on your work machine and your Sec team smacks your wrist. 
 {: .prompt-warning }
 
 Boom, we got it. I also did use `Get-FileHash` to compare this against the hash originally referenced in the alert that triggered all of this and it is the same.
