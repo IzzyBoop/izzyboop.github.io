@@ -27,7 +27,9 @@ So you found yourself responding to an alert about one of your employees downloa
 
 I was recently dealing with this exact scenario, and the method I chose to use was to trick the site into thinking I was coming from a Google ad click. I chose this method mainly because it seemed like my only way to grab the initial file at the time. The original file was no longer in place on the user’s machine, but I still wanted to analyze it. When I navigated to the malicious URL, however, I discovered the website was redirecting me to the real Advanced IP Scanner website, so I decided to trick it! (I’ll illustrate later how this wasn’t even necessary, and I thought way too hard about it.)
 
-The site we’re dealing with in this scenario is `hxxps://advanced[.]ip-scanner[.]co` (Please don’t, and if you do, don’t blame me lol).
+The site we’re dealing with in this scenario is `hxxps://advanced[.]ip-scanner[.]co` 
+> Please don’t, and if you do, don’t blame me lol
+{: .prompt-warning }
 
 Let’s just… go to the site! What’s the worst that could happen!?
 
