@@ -13,6 +13,7 @@ description: Exploring Common MacOS Persistence Mechanisms
 author: izzyboop
 image:
     path: /assets/img/Mac the Ripper/cover.webp
+    visible: false
 ---
 >This page was initially posted on [Medium](https://medium.com/@izzyboop/mac-the-ripper-persistence-01b2bb1dbc08)
 {: .prompt-info }

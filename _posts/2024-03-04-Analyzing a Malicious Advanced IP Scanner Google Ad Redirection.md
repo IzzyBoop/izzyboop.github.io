@@ -15,6 +15,7 @@ description: Titles are Hard
 author: izzyboop
 image:
     path: /assets/img/AdvIpScan/cover.webp
+    visible: false
 ---
 >This page was initially posted on [Medium](https://medium.com/@izzyboop/analyzing-a-malicious-advance-ip-scanner-google-ad-redirection-124d7c9a0d87) then turned into a [Huntress Blog](https://www.huntress.com/blog/analyzing-a-malicious-advanced-ip-scanner-google-ad-redirection). This blog serves as the latest version. I would also like to thank my colleague Jai Minton for digging into this with me. [Check out his blog.](https://www.jaiminton.com/)
 {: .prompt-info }
