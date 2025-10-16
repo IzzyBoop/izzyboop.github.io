@@ -16,6 +16,7 @@ description: Using Chainsaw for Effective Threat Analysis
 author: izzyboop
 image:
     path: /assets/img/Chainsaw/chainsaw.jpg
+show_image: false
 ---
 >This page was initially posted on [Medium](https://medium.com/@izzyboop/grab-your-chainsaw-were-going-hunting-50a5c82cef5d)
 {: .prompt-info }
