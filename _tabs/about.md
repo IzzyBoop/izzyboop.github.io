@@ -15,7 +15,7 @@ My formal education is meaningless. I initially went to college for Film VFX but
 
 I am also a member of the [DeTraced](https://detraced.org) cybersecurity research team. They're very neato and fun to work with. ^_^
 
-In my free time outside of tech I can often be found playing guitar (primarily 7 and 8 string because dj0nt), playing some sort of video game (`silksong`{: .filepath } at the time of writing (she silk my song til... my knight is... hollow?)), reading cute webcomics and nosleeps/creepypastas (`I Am the Grim Reaper`{: .filepath } and `Stolen Tongues`{: .filepath } are two faves), chasing drift cars with custom-built FPV drones ([@izzyboop_fpv on IG](https://www.instagram.com/izzyboop_fpv/)), or elbow-deep in the engine bay of some random Subaru while listening to Creed and cursing whatever malevolent god allowed the Subaru boxer engine to exist.
+In my free time outside of tech I can often be found playing guitar (primarily 7 and 8 string because dj0nt), playing some sort of video game (`Control`{: .filepath } and `silksong`{: .filepath } at the time of writing (she silk my song til... my knight is... hollow?)), reading cute webcomics, creepypastas, and _new weird_ stories (`I Am the Grim Reaper`{: .filepath } and the `Southern Reach`{: .filepath } series are two faves), chasing drift cars with custom-built FPV drones ([@izzyboop_fpv on IG](https://www.instagram.com/izzyboop_fpv/)), or elbow-deep in the engine bay of some random Subaru while listening to Creed and cursing whatever malevolent god allowed the Subaru boxer engine to exist.
 
 My dream is to one day quit cybersecurity forever and open up a queer-friendly coffee shop.
 
