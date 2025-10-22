@@ -7,8 +7,6 @@ order: 4
 > DANGER: Izzy out of containment
 {: .prompt-danger }
 
-## About Me
-
 Hiya! I'm Izzy! ^_^ Listen, I have no idea how to talk about myself so this is gonna be a mess.
 
 I currently work as a Threat Hunter for a well known MDR but fill my spare time researching the MacOS security landscape and slamming my face against ARM assembly. I have a non-zero amount of experience in malware analysis, threat intelligence, threat research, and various other parts of the same job that we collectively decided to section-off and give their own names. (I'm a generalist and prefer to keep it that way.) Prior to my current employment I was a SOC Analyst, IR (this was fun), wore many hats at an MSP, had a few years working with CADD software, was a welder (anodized aluminum TIG), a bartender (gay bar because duh), and worked in food service. (All this to say, I have experience handling walls of bullshit being flung at my face.) (Should I parenthesize more things? Is parenthesize a word?)
@@ -27,9 +25,11 @@ Uh, I think that's it? Sure, whatever, I'm sleepy anyway. K bai~
 
 ## External Blog Posts
 
+- TBA:
+    - Blog Incoming
+- Huntress:
+    - [Apr 1, 2024 - Analyzing a Malicious Advanced IP Scanner Google Ad Redirection](https://www.huntress.com/blog/analyzing-a-malicious-advanced-ip-scanner-google-ad-redirection)
 - Medium:
     - [Mar 4, 2024 - Analyzing a Malicious Advanced IP Scanner Google Ad Redirection](https://medium.com/@izzyboop/analyzing-a-malicious-advance-ip-scanner-google-ad-redirection-124d7c9a0d87)
     - [Dec 26, 2023 - Mac the Ripper: Persistence](https://medium.com/@izzyboop/mac-the-ripper-persistence-01b2bb1dbc08)
     - [Nov 12, 2023 - Grab Your Chainsaw, We’re Going Hunting](https://medium.com/@izzyboop/grab-your-chainsaw-were-going-hunting-50a5c82cef5d)
-- Huntress:
-    - [Apr 1, 2024 - Analyzing a Malicious Advanced IP Scanner Google Ad Redirection](https://www.huntress.com/blog/analyzing-a-malicious-advanced-ip-scanner-google-ad-redirection)
