@@ -19,4 +19,4 @@ In my free time outside of tech I can often be found playing guitar (primarily 7
 
 My dream is to one day quit cybersecurity forever and open up a queer-friendly coffee shop.
 
-Uh, I think that's it? Sure, whatever, I'm sleepy anyway. K bai~
+Uh, I think that's it? Sure, whatever, I'm sleepy anyway. K bai~~
