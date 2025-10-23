@@ -20,16 +20,3 @@ In my free time outside of tech I can often be found playing guitar (primarily 7
 My dream is to one day quit cybersecurity forever and open up a queer-friendly coffee shop.
 
 Uh, I think that's it? Sure, whatever, I'm sleepy anyway. K bai~
-
----
-
-## External Blog Posts
-
-- TBA:
-    - Blog Incoming
-- Huntress:
-    - [Apr 1, 2024 - Analyzing a Malicious Advanced IP Scanner Google Ad Redirection](https://www.huntress.com/blog/analyzing-a-malicious-advanced-ip-scanner-google-ad-redirection)
-- Medium:
-    - [Mar 4, 2024 - Analyzing a Malicious Advanced IP Scanner Google Ad Redirection](https://medium.com/@izzyboop/analyzing-a-malicious-advance-ip-scanner-google-ad-redirection-124d7c9a0d87)
-    - [Dec 26, 2023 - Mac the Ripper: Persistence](https://medium.com/@izzyboop/mac-the-ripper-persistence-01b2bb1dbc08)
-    - [Nov 12, 2023 - Grab Your Chainsaw, We’re Going Hunting](https://medium.com/@izzyboop/grab-your-chainsaw-were-going-hunting-50a5c82cef5d)
