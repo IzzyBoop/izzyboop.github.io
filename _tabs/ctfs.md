@@ -29,7 +29,7 @@ order: 1
 
 {% if posts.size == 0 %}
   <div class="alert alert-info text-center my-4">
-    {% capture no_posts_msg %}No writeups yet — check back later.{% endcapture %}
+    {% capture no_posts_msg %}No writeups yet, check back later.{% endcapture %}
     {{ site.data.locales[lang].tabs.no_writeups | default: no_posts_msg }}
   </div>
 {% else %}
