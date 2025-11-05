@@ -6,10 +6,6 @@ icon: fas fa-flag
 order: 1
 ---
 
-<!-- TODO: Fix Post Card Spacing -->
-
-<h1>CTF Writeups</h1>
-
 {% include lang.html %}
 
 {% assign all_pinned = '' | split: '' %}
