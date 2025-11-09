@@ -14,9 +14,9 @@
 #   icon: "fas fa-envelope"
 #   noblank: true # open link in current tab
 
-- type: rss
-  icon: "fas fa-rss"
-  noblank: true
+- type: boi
+  icon: "fas fa-frog"
+  url: 'https://izzyboop.com/assets/img/Other/himb.jpg'
 # Uncomment and complete the url below to enable more contact options
 #
 # - type: mastodon
