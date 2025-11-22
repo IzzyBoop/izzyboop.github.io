@@ -15,15 +15,15 @@ tags:
   - sigma rules
   - tooling
   - mac monitor
-date: 2025-10-18
-description: Developing better sigma rules and dectecots by using Atomic style indicators and MacMonitor. 
+date: 2025-11-22
+description: Developing better sigma rules and detectors by using Atomic style indicators and MacMonitor. 
 author: izzyboop
 image:
     path: /assets/img/digitstealer/cover.png
     visible: false
 ---
 
-> As with all my other blogs, this was written for myself as nm outlet to learn more about a specific subject. There may very well be better ways to do everything I do in this blog, and that's okay. 
+> As with all my other blogs, this was written for myself as an outlet to learn more about a specific subject. There may very well be better ways to do everything I do in this blog, and that's okay. Suckin at something is the first step toward bein sorta good at something.
 {: .prompt-info }
 
 ## Introduction
@@ -46,7 +46,8 @@ My second problem was that the actual telemetry I would need to detect against w
 My third problem was that I do not currently have a SIEM. I have some new hardware on the way to spin up Splunk in my homelab but at the moment my lab consists of some network hardware and a raspberry pi and the little guy was simply not up to the task of running Elastic or Splunk.
 
 This was while idle: 
-![image](/assets/img/digitstealer/pipain.png){: .shadow .rounded-10 }
+
+![image](/assets/img/digitstealer/pipain.png){: .w-75 .shadow .rounded-10 }
 _He was trying his best_
 
 With all of these limitations, I still had a task to complete. So how did I get it done? I created some fake malware samples meant to mimic the observed digitstealer activity that ultimately just prints some `hello world`'s and creates some files on disk. I ran my fake malware while using one of my favourite tools, [MacMonitor](https://github.com/Brandon7CC/mac-monitor), to see the resulting host telemetry to create my sigma rules, then used [sigma-esf](https://github.com/bradleyjkemp/sigma-esf) to test these sigma rules against my fake samples.
