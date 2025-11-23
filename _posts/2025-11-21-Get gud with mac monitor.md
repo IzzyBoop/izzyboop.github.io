@@ -23,7 +23,7 @@ image:
     visible: false
 ---
 
-> As with all my other blogs, this was written for myself as an outlet to learn more about a specific subject. There may very well be better ways to do everything I do in this blog, and that's okay. Suckin at something is the first step toward bein sorta good at something.
+> As with all my other blogs, this was written for myself as an outlet to learn more about a specific subject. There may very well be better ways to do everything I do in this blog, and that's okay. Suckin at something is the first step toward bein sorta good at something. 
 {: .prompt-info }
 
 ## Introduction
@@ -43,14 +43,16 @@ My first problem is that my malware analysis pipeline is a bit under the weather
 
 My second problem was that the actual telemetry I would need to detect against would be different than the source code provided in these blogs. I needed a way to see the resulting host telemetry without executing a (malicious) live sample. 
 
-My third problem was that I do not currently have a SIEM. I have some new hardware on the way to spin up Splunk in my homelab but at the moment my lab consists of some network hardware and a raspberry pi and the little guy was simply not up to the task of running Elastic or Splunk.
+My third problem was that I do not currently have a SIEM or any log ingestion tooling. I have some new hardware on the way to spin up ~~Splunk~~ Elastic in my homelab but at the moment my lab consists of some network hardware and a raspberry pi and the little guy was simply not up to the task of running Elastic or Splunk. 
 
 This was while idle: 
 
 ![image](/assets/img/digitstealer/pipain.png){: .w-75 .shadow .rounded-10 }
 _He was trying his best_
 
-With all of these limitations, I still had a task to complete. So how did I get it done? I created some fake malware samples meant to mimic the observed digitstealer activity that ultimately just prints some `hello world`'s and creates some files on disk. I ran my fake malware while using one of my favourite tools, [MacMonitor](https://github.com/Brandon7CC/mac-monitor), to see the resulting host telemetry to create my sigma rules, then used [sigma-esf](https://github.com/bradleyjkemp/sigma-esf) to test these sigma rules against my fake samples.
+>A/N: This was true at the time of this analysis. In the middle of writing this blog I have since spun up an ELK stack bacause Splunk's macOS ingesiton made me very sad. Further blogs will utilize ELK.
+
+With all of these limitations, I still had a task to complete. So how did I get it done? I created some fake malware samples meant to mimic the observed digitstealer activity that ultimately just prints some `hello world`'s and creates some files on disk. I ran my fake malware while using one of my favourite tools, [MacMonitor](https://github.com/Brandon7CC/mac-monitor) (thanks [Brandon Dalton](https://github.com/Brandon7CC)), to see the resulting host telemetry to create my sigma rules, then used [sigma-esf](https://github.com/bradleyjkemp/sigma-esf) to test these sigma rules against my benign samples.
 
 ## The Observed Activity
 ### The Dropper
