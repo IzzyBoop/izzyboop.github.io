@@ -23,7 +23,7 @@ image:
     visible: false
 ---
 
-> As with all my other blogs, this was written for myself as an outlet to learn more about a specific subject. There may very well be better ways to do everything I do in this blog, and that's okay. Suckin at something is the first step toward bein sorta good at something...
+> As with all my other blogs, this was written for myself as an outlet to learn more about a specific subject. There may very well be better ways to do everything I do in this blog, and that's okay. Suckin at something is the first step toward bein sorta good at something.
 {: .prompt-info }
 
 ## Introduction
