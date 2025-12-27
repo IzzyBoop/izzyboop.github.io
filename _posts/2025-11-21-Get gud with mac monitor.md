@@ -369,4 +369,4 @@ After stopping Mac Monitor, we see that we are met with several events to analyz
 
 ## Analyzing the Logs
 
-Let's break it down.
+Let's break it down step by step.
