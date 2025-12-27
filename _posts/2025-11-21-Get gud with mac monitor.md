@@ -23,12 +23,15 @@ image:
     visible: false
 ---
 
-> As with all my other blogs, this was written for myself as an outlet to learn more about a specific subject. There may very well be better ways to do everything I do in this blog, and that's okay. Suckin at something is the first step toward bein sorta good at something.
-{: .prompt-info }
-
 ## Introduction
 
-So on November 13 2025 [Thijs Xhaflaire](https://www.linkedin.com/in/thijs-xhaflaire-290b63a5/?originalSubdomain=nl) of Jamf Threat Labs dropped a [super awesome blog](https://www.jamf.com/blog/jtl-digitstealer-macos-infostealer-analysis/) about a new JXA-based macOS infostealer, DigitStealer. This blog provides an incredibly informative write up of the key behavious exhibited by this flavour of macOS stealer, and highlights some of the specifics that differ from previous stealers. (Finally, one that's not AMOS.)
+So why am I writing this blog? Because I want to, you're not my real dad, I do what I want.
+
+![image](/assets/img/digitstealer/profanity.webp){: .w-50 .shadow .rounded-10 }
+
+I apologize for my outburst. As with all my other blogs, this was written for myself as an outlet to learn more about a specific subject. There may very well be better ways to do everything I do in this blog, and that's okay. Suckin at something is the first step toward bein sorta good at something.
+
+On November 13 2025 [Thijs Xhaflaire](https://www.linkedin.com/in/thijs-xhaflaire-290b63a5/?originalSubdomain=nl) of Jamf Threat Labs dropped a [super awesome blog](https://www.jamf.com/blog/jtl-digitstealer-macos-infostealer-analysis/) about a new JXA-based macOS infostealer, DigitStealer. This blog provides an incredibly informative write up of the key behavious exhibited by this flavour of macOS stealer, and highlights some of the specifics that differ from previous stealers. (Finally, one that's not AMOS.)
 
 While reading this blog, I asked myself a series of questions. Namely:
 1. Do my current detectors fire on any of this activity?
