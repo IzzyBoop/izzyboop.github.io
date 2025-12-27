@@ -349,3 +349,24 @@ Now that I have all the pieces in place, I'm ready to run it with `MacMonitor` l
 
 ## Running the "Malware"
 
+>Mac Monitor can be downloaded from [here.](https://github.com/Brandon7CC/mac-monitor)
+{: .prompt-info :}
+
+Our first step is to download and launch Mac Monitor.
+
+![image](/assets/img/digitstealer/macmonitor.png)
+
+This tool works very similarly to `Process Monitor` on Windows. Let's illustrate.
+
+Before we execute the malware we will click `start` to begin listening for events then take our `DragToTerminal.msi` and, well, drag it into the terminal and hit `enter` (or return for you purists). Then once we are confident the malware is finished running, which should only take a moment, we can select `stop` on Mac Monitor. This will collect only the events related to and closely surrounding our malware execution. 
+
+![image](/assets/img/digitstealer/dragondrop.png){: .shadow .rounded-10 }
+
+After stopping Mac Monitor, we see that we are met with several events to analyze. This is the fun part! Below we see all the logs related to the fake malware execution that were collected, starting at the bottom with the execution of `DragToTerminal.msi` and ending at the top with `cat /tmp/FAKEMALWARE/final.applescript`. (Click the images too zoom in.)
+
+![image](/assets/img/digitstealer/initial2zoom.png){: .shadow .rounded-10 }
+![image](/assets/img/digitstealer/initial1zoom.png){: .shadow .rounded-10 }
+
+## Analyzing the Logs
+
+Let's break it down.
