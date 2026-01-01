@@ -1,0 +1,74 @@
+---
+---
+
+/* prettier-ignore */
+@use 'main
+{%- if jekyll.environment == 'production' -%}
+  .bundle
+{%- endif -%}
+';
+
+/* append your custom style below */
+
+/* -----------------------------
+   Custom: Code block text color
+   Change the `$code-text-color` value below to your desired hex.
+   This targets common fenced and inline code selectors and tries
+   to ensure token spans inherit the chosen color.
+   ----------------------------- */
+
+/* Token-level color overrides
+   Provide CSS custom properties for common Rouge token classes so
+   you can change the syntax palette in one place. Defaults mirror
+   Chirpy's built-in light/dark colors; change values below as needed.
+*/
+
+// /* Fallback for prefers-color-scheme when data-mode isn't set */
+// @media (prefers-color-scheme: dark) {
+//   :root {
+//     --code-token-keyword: #FF7EDB;
+//     --code-token-string: #c2dcdc;
+//     --code-token-function: #ffa86a;
+//     --code-token-constant: #FF7EDB;
+//     --code-token-number: #FE444F;
+//     --code-token-comment: #a4a4a4;
+//     --code-token-name: #36F9F6;
+//     --code-token-attr: #FF7EDB;
+//   }
+// }
+
+/* Fallback for prefers-color-scheme when data-mode isn't set */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --code-token-keyword: #f5bde6;
+    --code-token-string: ##a6da95;
+    --code-token-function: #f5a97f;
+    --code-token-constant: #f5bde6;
+    --code-token-number: #ed8796;
+    --code-token-comment: #939ab7;
+    --code-token-name: #91d7e3;
+    --code-token-attr: #f5bde6;
+  }
+}
+
+/* Apply token variables to Rouge/highlight token classes.
+   This preserves all other theme styling (background, linenos, etc.)
+   but lets you change per-token colors cleanly.
+*/
+.highlight .k, .highlight .kd, .highlight .kn, .highlight .kp, .highlight .kr, .highlight .kt, .highlight .kv { color: var(--code-token-keyword) !important; }
+.highlight .s, .highlight .sa, .highlight .sb, .highlight .sc, .highlight .sd, .highlight .se, .highlight .sh, .highlight .sx, .highlight .s1, .highlight .s2, .highlight .ss { color: var(--code-token-string) !important; }
+.highlight .nf, .highlight .fm { color: var(--code-token-function) !important; }
+.highlight .kc, .highlight .o, .highlight .ow { color: var(--code-token-constant) !important; }
+.highlight .m, .highlight .mi, .highlight .mf, .highlight .mo, .highlight .mb, .highlight .mh, .highlight .il, .highlight .mx { color: var(--code-token-number) !important; }
+.highlight .c, .highlight .cm, .highlight .ch, .highlight .cd, .highlight .cpf, .highlight .c1, .highlight .cs { color: var(--code-token-comment) !important; }
+.highlight .nb, .highlight .nc, .highlight .no, .highlight .nn { color: var(--code-token-name) !important; }
+.highlight .na, .highlight .sr, .highlight .nt { color: var(--code-token-attr) !important; }
+
+/* Keep inline/highlighter-rouge base color variable-driven as well */
+:root {
+  --site-inline-code-color: var(--code-token-string);
+}
+code.highlighter-rouge, code { color: var(--site-inline-code-color) !important; }
+
+/* End token-level overrides */
+
