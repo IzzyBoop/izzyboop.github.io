@@ -586,4 +586,4 @@ So go forth, create some fake malware, break some stuff, write some terrible sig
 
 If you want to follow along with my continued journey of questionable detection engineering and macOS shenanigans, all my sigma and yara rules are on [my github](https://github.com/IzzyBoop/Sigma-and-Yara-Rules/). Feel free to use them, improve them, or laugh at them. All three are valid responses.
 
-Now if you'll excuse me, I have an ELK stack to go configure. Wish me luck.
+Now if you'll excuse me, I have an ELK stack to go configure. Wish me luck. 
