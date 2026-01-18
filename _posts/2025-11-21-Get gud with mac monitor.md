@@ -15,7 +15,7 @@ tags:
   - sigma rules
   - tooling
   - mac monitor
-date: 2025-11-22
+date: 2026-01-18
 description: Developing better sigma rules and detectors by using Atomic style indicators and MacMonitor. 
 author: izzyboop
 image:
