@@ -23,31 +23,17 @@
    Chirpy's built-in light/dark colors; change values below as needed.
 */
 
-// /* Fallback for prefers-color-scheme when data-mode isn't set */
-// @media (prefers-color-scheme: dark) {
-//   :root {
-//     --code-token-keyword: #FF7EDB;
-//     --code-token-string: #c2dcdc;
-//     --code-token-function: #ffa86a;
-//     --code-token-constant: #FF7EDB;
-//     --code-token-number: #FE444F;
-//     --code-token-comment: #a4a4a4;
-//     --code-token-name: #36F9F6;
-//     --code-token-attr: #FF7EDB;
-//   }
-// }
-
 /* Fallback for prefers-color-scheme when data-mode isn't set */
 @media (prefers-color-scheme: dark) {
   :root {
-    --code-token-keyword: #f5bde6;
-    --code-token-string: ##a6da95;
+    --code-token-keyword: #c6a0f6;
+    --code-token-string: #cad3f5;
     --code-token-function: #f5a97f;
-    --code-token-constant: #f5bde6;
+    --code-token-constant: #c6a0f6;
     --code-token-number: #ed8796;
-    --code-token-comment: #939ab7;
+    --code-token-comment: #a5adcb;
     --code-token-name: #91d7e3;
-    --code-token-attr: #f5bde6;
+    --code-token-attr: #c6a0f6;
   }
 }
 
