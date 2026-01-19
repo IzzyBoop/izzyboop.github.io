@@ -584,6 +584,94 @@ detection:
 {: file="MacOS Digit Stealer Curling Payloads.yaml" .nolineno }
 {% endraw %}
 
+The last rule is a bit heavy and probably a bit too long but we ball. This rule is meant to detect any of the individual commandlines related to the creation of the malicious `app.asar` file that trojanizes the current ledger wallet install on a host machine.
+
+{% raw %}
+```yaml
+title: MacOS Digit Stealer - app.asar Creation
+description: Detects activity from the script that creates the app.asar Ledger Live file from three separate pieces
+id: 960a5e05-2ce9-475d-a8e9-e4047d5dd1e3
+status: experimental
+author: IzzyBoop
+date: 2025/11/20
+logsource:
+  product: macos
+  category: process_creation
+
+# detection:
+#   selection_1:
+#     ParentImage|endswith: 'osascript'
+#     CommandLine|contains|all:
+#       - 'sh -c'
+#       - 'osascript -e'
+#       - 'set volume with output muted'
+# Far too noisy. Used in a lot of legitimate processes apparently.
+
+  selection_2:
+    ParentImage|endswith: 'osascript'
+    CommandLine|contains|all:
+      - 'sh -c'
+      - 'mkdir -p'
+      - '/tmp/downloaded_parts'
+
+  selection_3:
+    ParentImage|endswith: 'osascript'
+    CommandLine|contains|all:
+      - 'sh -c'
+      - 'rm -f'
+      - '/tmp/app.asar.zip'
+
+  selection_4:
+    ParentImage|endswith: 'osascript'
+    CommandLine|contains|all:
+      - 'sh -c'
+      - 'curl'
+      - '--max-time'
+      - '--retry'
+      - '--retry-delay'
+      - '--retry-max-time'
+      - '-f -C - -o'
+
+  selection_5:
+    ParentImage|endswith: 'osascript'
+    CommandLine|contains|all:
+      - 'sh -c'
+      - 'cat'
+      - '/tmp/downloaded_parts/'
+      - '>>'
+      - '/tmp/app.asar.zip'
+
+  selection_6:
+    ParentImage|endswith: 'osascript'
+    CommandLine|contains|all:
+      - 'sh -c'
+      - 'cd'
+      - '/tmp'
+      - '&&'
+      - 'unzip -o'
+      - '/tmp/app.asar.zip'
+
+  selection_7:
+    ParentImage|endswith: 'osascript'
+    CommandLine|contains|all:
+      - 'sh -c'
+      - 'killall'
+      - 'Ledger Live'
+      - '|| true'
+
+  selection_8:
+    ParentImage|endswith: 'osascript'
+    CommandLine|contains|all:
+      - 'sh -c'
+      - 'rm -rf'
+      - '/tmp/downloaded_parts/'
+
+  condition: 1 of selection_*
+```
+{: file="MacOS Digit Stealer app_asar Creation.yaml" .nolineno }
+{% endraw %}
+
+
 ## Conclusion
 
 Look, I'll be honest with you. This whole process was messy, janky, and probably not how "real" malware analysts do it. But you know what? It worked. And more importantly, I learned a *ton* in the process.
