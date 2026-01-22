@@ -598,7 +598,7 @@ logsource:
   product: macos
   category: process_creation
 
-# detection:
+detection:
 #   selection_1:
 #     ParentImage|endswith: 'osascript'
 #     CommandLine|contains|all:
