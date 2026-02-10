@@ -7,6 +7,10 @@
   icon: "fa-brands fa-instagram"
   url: 'https://www.instagram.com/izzyboop_fpv/'
 
+- type: rss
+  icon: "fas fa-rss"
+  noblank: true
+
 # - type: twitter
 #   icon: "fa-brands fa-x-twitter"
 
