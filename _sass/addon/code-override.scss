@@ -1,0 +1,16 @@
+// Apply Atkinson Hyperlegible Mono to all code elements
+@use '../abstracts/variables' as *;
+
+code,
+pre,
+kbd,
+samp,
+tt,
+.highlight,
+.highlighter-rouge,
+div.highlight pre,
+figure.highlight pre,
+.highlight code,
+pre code {
+  font-family: $font-family-monospace;
+}
