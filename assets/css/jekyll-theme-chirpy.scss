@@ -67,3 +67,17 @@ h1, h2, h3, h4, h5, h6 {
   font-family: 'Atkinson Hyperlegible', sans-serif;
 }
 
+/* Monospace font for code blocks (production-safe: placed here so it's always loaded) */
+code,
+pre,
+kbd,
+samp,
+.highlight,
+.highlighter-rouge,
+div.highlight pre,
+figure.highlight pre,
+.highlight code,
+pre code {
+  font-family: 'Atkinson Hyperlegible Mono', monospace !important;
+}
+
