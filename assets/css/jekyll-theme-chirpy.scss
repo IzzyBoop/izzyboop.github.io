@@ -58,3 +58,12 @@ code.highlighter-rouge, code { color: var(--site-inline-code-color) !important; 
 
 /* End token-level overrides */
 
+/* Custom font overrides */
+body {
+  font-family: 'Atkinson Hyperlegible', sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Atkinson Hyperlegible', sans-serif;
+}
+
