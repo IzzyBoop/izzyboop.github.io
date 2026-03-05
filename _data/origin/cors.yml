@@ -15,7 +15,7 @@ resource_hints:
       - rel: dns-prefetch
 
 # Web Fonts
-webfonts: https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap
+webfonts: https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Atkinson+Hyperlegible+Mono:wght@400;700&display=swap
 
 # Libraries
 
